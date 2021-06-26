@@ -1,0 +1,26 @@
+<!--
+<style>
+  body {
+    font-family: 'Noto Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    color: #D3D3D3;
+    background: #2F2F2F;
+  }
+</style>
+-->
+
+<html lang="en">
+    <head>
+      <meta charset="utf-8">
+      {{ bokeh_css }}
+      {{ bokeh_js }}
+        <style>
+             {% include 'styles.css' %}
+        </style>
+    </head>
+    <body>
+      {{ plot_div|indent(8) }}
+      {{ plot_script|indent(8) }}
+    </body>
+</html>
