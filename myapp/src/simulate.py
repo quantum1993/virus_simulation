@@ -375,7 +375,7 @@ class EpidemicSimulation:
 
     def _get_plot(self):
         curdoc().title = "Epidemic Simulation"
-        self.desc = Div(text=open('virus_simulation/description.html').read(), sizing_mode="stretch_width")
+        self.desc = Div(text=open('myapp/description.html').read(), sizing_mode="stretch_width")
         self.layout = column(
             self.desc,
             row(
