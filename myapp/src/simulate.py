@@ -64,13 +64,14 @@ class EpidemicSimulation:
         self._update_buttons()
         self._get_point_fig()
         self._get_line_fig()
+        self._get_legend()
         self._get_plot()
 
-    def _init_status(self):
-        self._get_init_data_source()
-        self._get_point_fig()
-        self._get_line_fig()
-        self._get_plot()
+    # def _init_status(self):
+    #     self._get_init_data_source()
+    #     self._get_point_fig()
+    #     self._get_line_fig()
+    #     self._get_plot()
 
     def _update_buttons(self):
         self.slider_pop.on_change('value_throttled', self._update_slider('pop_size', self.slider_pop, self.people))
@@ -232,6 +233,8 @@ class EpidemicSimulation:
                     self.line_fig,
                     Div(width=50),
                     self.point_fig,
+                    Div(width=50),
+                    self.legend_fig,
                     width=1200
                 )
             )
@@ -337,6 +340,38 @@ class EpidemicSimulation:
         loading_page.toolbar_location = None
         self.layout.children = [loading_page, row(Div(width=550), self.button_stop_run, Div(width=450))]
 
+    def _get_legend(self):
+        text_legend = ColumnDataSource(data=dict(
+            x=[10, 10, 10],
+            y=[70, 80, 90],
+            text=['Removed', 'Infected ', 'Susceptible'],
+            color=[self.removed_color, self.infect_color, self.sus_color],
+            text_color=['#D3D3D3', '#D3D3D3', '#D3D3D3']
+        ))
+        self.legend_fig = figure(
+            width=120,
+            height=400,
+            x_range=(0, 100), y_range=(0, 100)
+        )
+        label = LabelSet(x='x', y='y',
+                         text='text', source=text_legend, x_offset=10, y_offset=-5, text_font_size="10pt", text_color='text_color')
+        self.legend_fig.square(x='x', y='y', size=10, source=text_legend, color='color')
+        self.legend_fig.add_layout(label)
+        self.legend_fig.xgrid.grid_line_color = None
+        self.legend_fig.ygrid.grid_line_color = None
+        self.legend_fig.xaxis.major_tick_line_color = None  # turn off x-axis major ticks
+        self.legend_fig.xaxis.minor_tick_line_color = None  # turn off x-axis minor ticks
+        self.legend_fig.yaxis.major_tick_line_color = None  # turn off y-axis major ticks
+        self.legend_fig.yaxis.minor_tick_line_color = None  # turn off y-axis minor ticks
+        self.legend_fig.xaxis.major_label_text_color = None  # turn off x-axis tick labels leaving space
+        self.legend_fig.yaxis.major_label_text_color = None  # turn off y-axis tick labels leaving space
+        self.legend_fig.xaxis.major_label_text_font_size = '0pt'  # preferred method for removing tick labels
+        self.legend_fig.yaxis.major_label_text_font_size = '0pt'  # preferred method for removing tick labels
+        self.legend_fig.outline_line_color = None
+        self.legend_fig.axis.visible = None
+        self.legend_fig.toolbar.logo = None
+        self.legend_fig.toolbar_location = None
+
     def _period_update(self):
         if self.start_flag:
             self.step_index = 0
@@ -388,10 +423,11 @@ class EpidemicSimulation:
                 self.line_fig,
                 Div(width=50),
                 self.point_fig,
+                Div(width=50),
+                self.legend_fig,
                 width=1200
             )
         )
-        # self.layout2 = [self.layout].copy()
         curdoc().add_root(self.layout)
 
 # python -m bokeh serve virus_simulation --dev virus_simulation
