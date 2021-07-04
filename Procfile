@@ -1,1 +1,1 @@
-web: bokeh serve --port=$PORT --allow-websocket-origin=virus_simulation.herokuapp.com --address=0.0.0.0 --use-xheaders myapp
+web: bokeh serve --log-level=debug --port=$PORT --allow-websocket-origin=virus-simulation.herokuapp.com --address=0.0.0.0 --use-xheaders myapp
