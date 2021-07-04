@@ -1,0 +1,3 @@
+https://djangogirlstaipei.herokuapp.com/tutorials/deploy-to-heroku/?os=windows
+https://samirak93.github.io/analytics/Deploy-bokeh-server-plots-using-heroku.html
+https://stackoverflow.com/questions/47949173/deploy-a-python-dash-app-to-heroku-using-conda-environments-instead-of-virtua
